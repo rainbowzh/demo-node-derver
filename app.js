@@ -44,8 +44,10 @@ app.use(function(err, req, res, next) {
 });
 
 
-mongoose.connect('mongodb://localhost:27017/member' ,{ useNewUrlParser: true });
-var db = mongoose.connection;
-db.on('error',console.error.bind(console, 'connection error'));
-
+mongoose.connect('mongodb://localhost:27017/member' ,{ useNewUrlParser: true })
+  .then( (res) => {
+    console.log(res);
+    
+  },
+  err => console.log(err))
 module.exports = app;
