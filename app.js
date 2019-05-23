@@ -6,9 +6,12 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var merberRouter = require('./routes/merbers') ;
 
 var app = express();
 
+var mongoose = require('mongoose') ;
+var Member = require('./Modal/Member');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/merber' , merberRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -38,5 +42,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+mongoose.connect('mongodb://localhost:27017/member' ,{ useNewUrlParser: true });
+var db = mongoose.connection;
+db.on('error',console.error.bind(console, 'connection error'));
 
 module.exports = app;
