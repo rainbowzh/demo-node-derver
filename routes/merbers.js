@@ -7,7 +7,7 @@ router.get('/', function(req, res) {
         if (err) res.send(err);
         console.log(members);
         
-        res.json(members);
+        res.send('members');
     });
         
 });

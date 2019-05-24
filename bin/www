@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var appServer = require('../apiserver') ;
+var apiServer = require('../apiserver') ;
 var debug = require('debug')('demo-related-server:server');
 var http = require('http');
 
@@ -16,12 +16,15 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+var apiPort = normalizePort('3333') ;
+apiServer.set('port', apiPort) ;
 
 /**
  * Create HTTP server.
  */
 
 var server = http.createServer(app);
+var APIserver = http.createServer(apiServer) ; 
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -30,6 +33,10 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+APIserver.listen(apiPort);
+APIserver.on('error', onError);
+APIserver.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.

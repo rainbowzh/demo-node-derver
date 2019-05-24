@@ -1,23 +1,40 @@
-// var express = require('express');
-// var appServer = express();
-var http = require('http');
-http.createServer(function( req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.write('request successfully proxied!' + '\n' + JSON.stringify(req.headers, true, 2));
-    res.end();
-}).listen(3333);
-
-// var apiRouter = require('./routes/apis');
-
-// appServer.use('/hello' , apiRouter);
+var express = require('express');
+var createError = require('http-errors');
+var path = require('path') ;
+var cookieParser = require('cookie-parser') ;
+var logger = require('morgan') ;
 
 
-// app.use(express.static('public'));
-// server.create(3333,function(){
-//     var host = server.address().address;
-//     var port = server.address().port;
-//     console.log('应用实例，访问地址为 http://%s:%s',host,port);
-// })
- 
+var apiServer = express();
 
-// module.exports = appServer;
+var apis = require('./routes/apis');
+
+
+apiServer.set('views',path.join(__dirname ,'views'));
+apiServer.set('view engine','jade') ;
+
+
+apiServer.use(logger('dev')) ;
+apiServer.use(express.json()) ;
+apiServer.use(express.urlencoded({extended : false})) ;
+apiServer.use(cookieParser()) ;
+apiServer.use(express.static(path.join(__dirname ,'public'))) ;
+
+apiServer.use('/' , apis) ;
+
+
+apiServer.use( (req, res ,next) => {
+    next(createError(404)) ;
+})
+
+apiServer.use((err, req, res ,next) => {
+    res.locals.message = err.message ;
+    res.locals.error = req.app.get('env') === 'development' ? err : {} ;
+
+    res.status(err.status || 500) ;
+    res.render('error') ;
+})
+
+
+
+module.exports = apiServer ;
