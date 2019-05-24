@@ -15,6 +15,7 @@
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
+    "http-proxy-middleware": "^0.19.1",
     "jade": "~1.11.0",
     "mongodb": "^3.2.5",
     "mongoose": "^5.5.10",
