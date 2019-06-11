@@ -1,40 +1,41 @@
 var express = require('express');
-var createError = require('http-errors');
-var path = require('path') ;
 var cookieParser = require('cookie-parser') ;
-var logger = require('morgan') ;
-
-
 var apiServer = express();
+var mongoose = require('mongoose') ;
+var session = require('express-session') ;
+var bodyParser = require('body-parser');
+var Member = require('./Modal/Member');
 
-var apis = require('./routes/apis');
+var apis = require('./routes/Apis/apis');
+var User = require('./routes/Apis/User');
 
-
-apiServer.set('views',path.join(__dirname ,'views'));
-apiServer.set('view engine','jade') ;
-
-
-apiServer.use(logger('dev')) ;
-apiServer.use(express.json()) ;
-apiServer.use(express.urlencoded({extended : false})) ;
-apiServer.use(cookieParser()) ;
-apiServer.use(express.static(path.join(__dirname ,'public'))) ;
-
-apiServer.use('/' , apis) ;
-
-
-apiServer.use( (req, res ,next) => {
-    next(createError(404)) ;
-})
-
-apiServer.use((err, req, res ,next) => {
-    res.locals.message = err.message ;
-    res.locals.error = req.app.get('env') === 'development' ? err : {} ;
-
-    res.status(err.status || 500) ;
-    res.render('error') ;
-})
+apiServer.use(bodyParser.urlencoded({extended: false}));
+apiServer.use(cookieParser('express_react_cookie'));
+apiServer.use(session({
+    secret:'express_react_cookie',
+    resave: true,
+    saveUninitialized:true,
+    cookie: {maxAge: 60 * 1000 * 30}//过期时间
+}));
 
 
+apiServer.use('/' ,User) ;
+apiServer.use('/api' , apis) ;
+
+mongoose.connect('mongodb://localhost:27017/member' ,{ useNewUrlParser: true })
+  .then( () => {
+    var small = new Member({
+      name : 'zhouhong07' ,
+      age : 14
+    });
+    small.save( (err, res) => {
+      if (err) {
+        console.log(err);
+        
+      }
+      res.speak();
+    })
+  },
+  err => console.log(err))
 
 module.exports = apiServer ;

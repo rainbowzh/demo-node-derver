@@ -1,9 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
+var ejs = require('ejs')
 var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-// import connectHistoryApiFallback from 'connect-history-api-fallback' ;
+var logger = require('morgan');//中间件
+var  connectHistoryApiFallback = require('connect-history-api-fallback') ;
 var proxy = require( 'http-proxy-middleware');
 
 
@@ -13,28 +13,46 @@ var merberRouter = require('./routes/merbers') ;
 
 
 var app = express();
+// var Express = express ;
 
-var mongoose = require('mongoose') ;
-var Member = require('./Modal/Member');
+// view engine setup, if dont have ,will drop an error;
+app.set('views', path.join(__dirname, 'views'));  //设置views文件夹为存放视图文件的目录，即存放模板的地方，__dirname为全局变量，存储当前正在执行的脚本所在的目录。
+app.engine('html',ejs.__express);
+app.set('view engine', 'html');
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
-// app.use('/',Express.static(path.join(__dirname,"..",'build')));
+
+
+// app.use('/',express.static(path.join(__dirname,"..",'build')));
 // app.use('/', connectHistoryApiFallback());
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(logger('dev'));//记录morgan中间件日志
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/merber' , merberRouter);
-app.use('/api',proxy({target: 'http://localhost:3333', changeOrigin : true}));
-// catch 404 and forward to error handler
+
+
+//代理api
+var options = {
+  target : 'http://localhost:3333' ,
+  changeOrigin : true
+}
+var exampleProxy = proxy(options) ;
+app.use('/api', exampleProxy);
+
+
+
+
+/****
+ * @intro ： control error;
+ */
+
+
+//catch 404 and forward to error handler
 app.use(function(req, res, next) { 
   next(createError(404));
 });
@@ -51,19 +69,4 @@ app.use(function(err, req, res, next) {
 });
 
 
-mongoose.connect('mongodb://localhost:27017/member' ,{ useNewUrlParser: true })
-  .then( () => {
-    var small = new Member({
-      name : 'zhouhong07' ,
-      age : 14
-    });
-    small.save( (err, res) => {
-      if (err) {
-        console.log(err);
-        
-      }
-      res.speak();
-    })
-  },
-  err => console.log(err))
 module.exports = app;
