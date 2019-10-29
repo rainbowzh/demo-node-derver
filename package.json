@@ -20,7 +20,7 @@
     "http-proxy-middleware": "^0.19.1",
     "jade": "~1.11.0",
     "mongodb": "^3.2.5",
-    "mongoose": "^5.5.10",
+    "mongoose": "^5.7.5",
     "morgan": "~1.9.0"
   }
 }
