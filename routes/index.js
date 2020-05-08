@@ -1,9 +1,23 @@
+/*
+ * @Description: 
+ * @Version: 2.0
+ * @Author: zhouhong07
+ * @Date: 2020-05-08 10:37:09
+ * @LastEditors: zhouhong07
+ * @LastEditTime: 2020-05-08 17:49:21
+ */
 var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
+
+
+//设置返回模板
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express' },(err, html) => {
+    res.set('Content-Type', 'text/html')
+    res.send(html) ;
+  });
 });
 
 module.exports = router;

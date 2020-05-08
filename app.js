@@ -4,14 +4,14 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-05-08 16:44:19
+ * @LastEditTime: 2020-05-08 17:30:43
  */
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var ejs = require('ejs') ;
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -20,7 +20,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html',ejs.__express);
-app.set('view engine', 'html');
+app.set('view engine','html');
 
 
 
