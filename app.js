@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-05-08 17:30:43
+ * @LastEditTime: 2020-05-11 10:58:06
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -39,7 +39,6 @@ app.all('*', function(req, res, next) {
   res.header("Content-Type", "application/json;charset=utf-8");
   next();
 });
-
 
 //后端路由 
 app.use('/', indexRouter);
