@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-15 16:27:36
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-05-15 16:58:08
+ * @LastEditTime: 2020-05-22 17:10:21
  */ 
 const mongoose = require('mongoose') ;
 
@@ -24,10 +24,13 @@ const UserSchema = new Schema({
   },
   userIcon : {
     type :  String
+  },
+  password : {
+    type : String
   }
 },{
-  collection : "user" ,
-  versionKey : false
+  collection : "user" , //选定user不在默认添加
+  versionKey : false //使数据不自动添加_v
 });
 
 
