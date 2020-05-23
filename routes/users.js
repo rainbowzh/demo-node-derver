@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-05-22 17:08:10
+ * @LastEditTime: 2020-05-23 11:59:00
  */
 const { v4: uuidv4 } = require('uuid');
 const express = require('express');
@@ -14,6 +14,7 @@ const jwt=require('jsonwebtoken');
 const assert=require('http-assert');
 var mongoose = require('mongoose') ;
 const User = require('./../models/user') ;
+const Article = require('../models/article');
 
 //资源创建 
 // router.post('/', async(req,res) => {
@@ -57,7 +58,10 @@ router.use( function (req,res,next) {
   if(user != null) {
     const isValid = passport.validate(password, user.password) ;
     if(isValid) {
-      res.send('123');
+      res.send({
+        status: "0" ,
+        message : "登录成功"
+      });
       // const token = jwt.sign({id:user._id},app.get('secret')) ;   //生成token 给密钥secret防止客户端篡改信息
       // res.send({token}) ; //发送token给客户端
     }else{
@@ -126,9 +130,40 @@ router.post('/user/register',function (req,res) {
     responseData.message = '注册成功';
     res.json(responseData);
     return;
+  });
 });
 
 
+//保存文章
+router.post ('/article/save', async(req, res) => {
+  const { title = "" , context = "" , publishTime = new Date().toLocaleDateString() } = req.body ;
+  //过滤title和context
+  const id = uuidv4();
+  const article =  new Article({ id : id, title : title, context : context, publishTime : publishTime}) ;
+  await article.save();
+  if(article){
+    res.json({
+      status : "0" ,
+      message : "成功"
+    })
+  }else{
+    res.json({
+      status : "-1" ,
+      message : "失败"
+    })
+  }
+});
+
+
+//获取文章列表
+router.get('/article/list', async(req, res) => {
+  const list  = await Article.find({});
+  console.log('list--',list);
+  res.json({
+    list : list ,
+    status : "0" ,
+    message: "成功"
+  })
 });
 
 module.exports = router ;

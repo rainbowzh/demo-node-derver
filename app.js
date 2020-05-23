@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-05-21 19:29:21
+ * @LastEditTime: 2020-05-23 10:53:36
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -60,7 +60,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // app.use('/', indexRouter);
 app.use('/api', usersRouter);
-
 
 mongoose.connect('mongodb://localhost:27017/test',{useNewUrlParser:true});
 mongoose.connection.on('connected', function(err) {
