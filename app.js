@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-05-23 10:53:36
+ * @LastEditTime: 2020-05-28 10:17:13
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -27,7 +27,8 @@ app.set('view engine','html');
 
 
 app.use(logger('dev'));
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 app.use(require('cors')());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -46,20 +47,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 // });
 
 
-
-//后端路由
-
-// app.post('/users/admin/api/login', (req,res) => {
-//   console.log(req, res);
-//   const { username, password } = req.body ;  //解构赋值
-//   console.log('----',username,password);
-//   res.json({
-//     status : "444"
-//   })
-// })
-
-// app.use('/', indexRouter);
 app.use('/api', usersRouter);
+app.use('/web/mylog', indexRouter);
 
 mongoose.connect('mongodb://localhost:27017/test',{useNewUrlParser:true});
 mongoose.connection.on('connected', function(err) {
