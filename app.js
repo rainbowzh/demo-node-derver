@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-06-03 16:52:36
+ * @LastEditTime: 2020-06-03 17:07:10
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -28,13 +28,14 @@ app.set('view engine','html');
 
 app.use(logger('dev'));
 app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb',extended:false}));
 app.use(require('cors')());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({extended:false}));
+
 
 //配置可跨域访问
 // app.all('*', function(req, res, next) {
