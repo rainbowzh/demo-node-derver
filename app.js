@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-05-28 10:17:13
+ * @LastEditTime: 2020-06-03 16:16:46
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -50,7 +50,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/api', usersRouter);
 app.use('/web/mylog', indexRouter);
 
-mongoose.connect('mongodb://localhost:27017/test',{useNewUrlParser:true});
+//添加一些连接配置
+mongoose.set('useCreateIndex', true) //加上这个
+mongoose.connect('mongodb://localhost:27017/test',{useNewUrlParser:true ,useUnifiedTopology: true});
 mongoose.connection.on('connected', function(err) {
   if (err) {
     console.error('Failed to connect to database');
