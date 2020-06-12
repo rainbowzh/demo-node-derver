@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-06-05 17:58:42
+ * @LastEditTime: 2020-06-12 09:06:00
  */
 var express = require('express');
 var router = express.Router();
@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
   var deviceAgent = req.headers["user-agent"].toLowerCase();
   var agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
   if(agentID){
-    res.render('error', { title: 'Express' },(err, html) => {
+    res.render('mobile', { title: 'Express' },(err, html) => {
       res.set('Content-Type', 'text/html')
       res.send(html) ;
     });
