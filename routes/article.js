@@ -4,29 +4,52 @@
  * @Author: zhouhong07
  * @Date: 2020-05-23 10:18:06
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-05-23 10:50:12
+ * @LastEditTime: 2020-06-29 15:06:55
  */ 
-const express = require('express') ;
-const router = express.router ;
+var express = require('express');
+var router = express.Router();
 const Article = require('../models/article');
 const { v4 : uuid } = require('uuid') ;
 
 
-// router.get ('/article/list', async(req, res) => {
-//   const { type = [] } = req.body ;
-//   if(type.length > 0) {//查询全部表
-    
-//   }else{//查询筛选的表
+//获取文章列表
+router.get('/list', async(req, res) => {
+  const list  = await Article.find({});
+  console.log('list--',list);
+  res.json({
+    list : list ,
+    status : "0" ,
+    message: "成功"
+  })
+});
 
+
+// router.post ('/article/save', async(req, res) => {
+//   const { title = "" , context = "" , publishTime = new Date().toLocaleDateString() , textType = "" } = req.body ;
+//   //过滤title和context
+//   const id = uuid();
+//   const article =  await Article.save({ id : id, title : title, context : context, publishTime : publishTime ,textType : textType}) ;
+//   if(article){
+//     res.json({
+//       status : "0" ,
+//       message : "成功"
+//     })
+//   }else{
+//     res.json({
+//       status : "-1" ,
+//       message : "失败"
+//     })
 //   }
-// })
+// }) ;
 
 
-router.post ('/article/save', async(req, res) => {
+//保存文章
+router.post ('/save', async(req, res) => {
   const { title = "" , context = "" , publishTime = new Date().toLocaleDateString() } = req.body ;
   //过滤title和context
-  const id = uuid();
-  const article =  await Article.save({ id : id, title : title, context : context, publishTime : publishTime}) ;
+  const id = uuidv4();
+  const article =  new Article({ id : id, title : title, context : context, publishTime : publishTime}) ;
+  await article.save();
   if(article){
     res.json({
       status : "0" ,
@@ -38,6 +61,6 @@ router.post ('/article/save', async(req, res) => {
       message : "失败"
     })
   }
-})
+});
 
 module.exports = router ;

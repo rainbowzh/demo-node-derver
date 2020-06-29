@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-05-23 11:59:00
+ * @LastEditTime: 2020-06-29 15:05:58
  */
 const { v4: uuidv4 } = require('uuid');
 const express = require('express');
@@ -16,37 +16,21 @@ var mongoose = require('mongoose') ;
 const User = require('./../models/user') ;
 const Article = require('../models/article');
 
-//资源创建 
-// router.post('/', async(req,res) => {
-//   const model=await req.Model.create(req.body) ;
-//   res.send(model) ;
-// }); 
-
-
-// //资源列表
-// router.get('/', async(req,res) => {
-//   const queryOptions={} ;
-//   if(req.Model.modelName === 'Category'||'Menu'){
-//     queryOptions.populate='parent' ;
-//   }
-//   const items=await req.Model.find().setOptions(queryOptions).limit(100) ;
-//   res.send(items) ;
-// })
 
 var responseData;
 
 router.use( function (req,res,next) {
-    responseData = {
-        code: 0,
-        message:''
-    };
-    next();
+  responseData = {
+      code: 0,
+      message:''
+  };
+  next();
 });
 
 
 
 //登录
- router.post('/user/login', async (req,res) => {
+ router.post('/login', async (req,res) => {
   const { username, password } = req.body ;  //解构赋值
   console.log('----',username, password);
   // res.json({
@@ -81,7 +65,7 @@ router.use( function (req,res,next) {
 
 
  //注册
-router.post('/user/register',function (req,res) {
+router.post('/register',function (req,res) {
   // console.log(req.body);
   var username = req.body.username;
   var password = req.body.password;
@@ -134,36 +118,36 @@ router.post('/user/register',function (req,res) {
 });
 
 
-//保存文章
-router.post ('/article/save', async(req, res) => {
-  const { title = "" , context = "" , publishTime = new Date().toLocaleDateString() } = req.body ;
-  //过滤title和context
-  const id = uuidv4();
-  const article =  new Article({ id : id, title : title, context : context, publishTime : publishTime}) ;
-  await article.save();
-  if(article){
-    res.json({
-      status : "0" ,
-      message : "成功"
-    })
-  }else{
-    res.json({
-      status : "-1" ,
-      message : "失败"
-    })
-  }
-});
+// //保存文章
+// router.post ('/article/save', async(req, res) => {
+//   const { title = "" , context = "" , publishTime = new Date().toLocaleDateString() } = req.body ;
+//   //过滤title和context
+//   const id = uuidv4();
+//   const article =  new Article({ id : id, title : title, context : context, publishTime : publishTime}) ;
+//   await article.save();
+//   if(article){
+//     res.json({
+//       status : "0" ,
+//       message : "成功"
+//     })
+//   }else{
+//     res.json({
+//       status : "-1" ,
+//       message : "失败"
+//     })
+//   }
+// });
 
 
-//获取文章列表
-router.get('/article/list', async(req, res) => {
-  const list  = await Article.find({});
-  console.log('list--',list);
-  res.json({
-    list : list ,
-    status : "0" ,
-    message: "成功"
-  })
-});
+// //获取文章列表
+// router.get('/article/list', async(req, res) => {
+//   const list  = await Article.find({});
+//   console.log('list--',list);
+//   res.json({
+//     list : list ,
+//     status : "0" ,
+//     message: "成功"
+//   })
+// });
 
 module.exports = router ;

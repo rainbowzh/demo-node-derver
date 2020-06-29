@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-06-03 17:07:10
+ * @LastEditTime: 2020-06-29 15:07:52
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -14,6 +14,7 @@ var logger = require('morgan');
 var ejs = require('ejs') ;
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var articleRouter = require('./routes/article');
 var mongoose = require('mongoose') ;
 var app = express();
 var bodyParser = require('body-parser');
@@ -48,7 +49,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 
 
-app.use('/api', usersRouter);
+app.use('/api/user', usersRouter);
+app.use('/api/article', articleRouter);
 app.use('/web/mylog', indexRouter);
 
 //添加一些连接配置
