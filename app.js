@@ -3,8 +3,8 @@
  * @Version: 2.0
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
- * @LastEditors: zhouhong07
- * @LastEditTime: 2020-06-29 15:07:52
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-07-02 00:24:16
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -55,7 +55,7 @@ app.use('/web/mylog', indexRouter);
 
 //添加一些连接配置
 mongoose.set('useCreateIndex', true) //加上这个
-mongoose.connect('mongodb://localhost:27017/test',{useNewUrlParser:true ,useUnifiedTopology: true});
+mongoose.connect('mongodb://49.235.235.22:27017/test',{useNewUrlParser:true ,useUnifiedTopology: true});
 mongoose.connection.on('connected', function(err) {
   if (err) {
     console.error('Failed to connect to database');
