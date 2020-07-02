@@ -3,8 +3,8 @@
  * @Version: 2.0
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
- * @LastEditors: zhouhong07
- * @LastEditTime: 2020-07-02 19:26:11
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2020-07-02 22:17:16
  */
 const { v4: uuidv4 } = require('uuid');
 const express = require('express');
@@ -119,10 +119,26 @@ router.post('/register',function (req,res) {
 
 
 //留言
-router.post('/sayWords/save', function(req, res){
-  console.log(req.body);
+router.post('/sayWords/save', ( async (req, res) => {
+  let { nickName = "" , sayText = "" } = req.body ;
+  let nickId = Math.random().toString(36).slice(2) ;
+  console.log(nickId, nickName,sayText);
+  let custom = new Customer({ nickId : nickId , nickName : nickName, sayText : sayText }) ;
+  await custom.save();
   //存储留言信息
-});
+  console.log(nickId, nickName,sayText,custom);
+  if(custom){
+    res.json({
+      status : "0" ,
+      message : "成功"
+    })
+  }else{
+    res.json({
+      status : "-1" ,
+      message : "失败"
+    })
+  }
+}));
 
 // //保存文章
 // router.post ('/article/save', async(req, res) => {
