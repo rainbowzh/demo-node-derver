@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-07-02 14:48:38
+ * @LastEditTime: 2020-07-02 15:09:40
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -18,13 +18,14 @@ var articleRouter = require('./routes/article');
 var mongoose = require('mongoose') ;
 var app = express();
 var bodyParser = require('body-parser');
+const compression = require('compression') ;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html',ejs.__express);
 app.set('view engine','html');
 
-
+app.use(compression()); // 需要位于 express.static 前面，否则不起作用
 app.use(logger('dev'));
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb',extended:false}));
