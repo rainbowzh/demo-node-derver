@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-07-02 14:41:00
+ * @LastEditTime: 2020-07-02 14:42:46
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -34,7 +34,7 @@ app.use(express.urlencoded({limit: '50mb',extended:false}));
 app.use(require('cors')());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(compression());//启用压缩
+// app.use(compression());//启用压缩
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended:false}));
