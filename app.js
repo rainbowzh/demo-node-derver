@@ -3,8 +3,8 @@
  * @Version: 2.0
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-07-02 00:24:16
+ * @LastEditors: zhouhong07
+ * @LastEditTime: 2020-07-02 14:27:23
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -18,7 +18,7 @@ var articleRouter = require('./routes/article');
 var mongoose = require('mongoose') ;
 var app = express();
 var bodyParser = require('body-parser');
-
+var compression = require('compression')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,6 +27,7 @@ app.set('view engine','html');
 
 
 
+app.use(compression());//启用压缩
 app.use(logger('dev'));
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb',extended:false}));
