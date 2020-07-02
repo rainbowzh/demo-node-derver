@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-06-29 15:05:58
+ * @LastEditTime: 2020-07-02 19:26:11
  */
 const { v4: uuidv4 } = require('uuid');
 const express = require('express');
@@ -15,7 +15,7 @@ const assert=require('http-assert');
 var mongoose = require('mongoose') ;
 const User = require('./../models/user') ;
 const Article = require('../models/article');
-
+const Customer = require('../models/customer') ;
 
 var responseData;
 
@@ -117,6 +117,12 @@ router.post('/register',function (req,res) {
   });
 });
 
+
+//留言
+router.post('/sayWords/save', function(req, res){
+  console.log(req.body);
+  //存储留言信息
+});
 
 // //保存文章
 // router.post ('/article/save', async(req, res) => {

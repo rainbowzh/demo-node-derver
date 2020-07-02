@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-23 10:18:06
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-07-01 17:55:13
+ * @LastEditTime: 2020-07-02 19:10:18
  */ 
 var express = require('express');
 var router = express.Router();
@@ -45,10 +45,11 @@ router.get('/list', async(req, res) => {
 
 //保存文章
 router.post ('/save', async(req, res) => {
-  const { title = "" , context = "" , publishTime = new Date().toLocaleDateString() } = req.body ;
+  const { title = "" , context = "" , publishTime = new Date().toLocaleDateString(),  textType = {}} = req.body ;
   //过滤title和context
+  console.log("textType",textType, req.body) ;
   const id = Math.random().toString(36).slice(2);
-  const article =  new Article({ id : id, title : title, context : context, publishTime : publishTime}) ;
+  const article =  new Article({ id : id, title : title, context : context, publishTime : publishTime , textType : textType}) ;
   await article.save();
   if(article){
     res.json({
