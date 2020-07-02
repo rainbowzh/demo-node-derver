@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-07-02 14:46:10
+ * @LastEditTime: 2020-07-02 14:48:38
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -18,7 +18,6 @@ var articleRouter = require('./routes/article');
 var mongoose = require('mongoose') ;
 var app = express();
 var bodyParser = require('body-parser');
-var compression = require('compression')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,15 +25,12 @@ app.engine('html',ejs.__express);
 app.set('view engine','html');
 
 
-
-// app.use(compression());//启用压缩
 app.use(logger('dev'));
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb',extended:false}));
 app.use(require('cors')());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(compression());//启用压缩
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended:false}));
