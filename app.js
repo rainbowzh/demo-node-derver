@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-07-02 17:55:07
+ * @LastEditTime: 2020-07-27 16:47:37
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -54,8 +54,16 @@ app.use('/web/mylog', indexRouter);
 
 //添加一些连接配置
 mongoose.set('useCreateIndex', true) //加上这个
-// const baseUrl = 'mongodb://49.235.235.22:27017/test' ;
-const baseUrl = 'mongodb://localhost:27017/test' ;
+// const baseUrl = 'mongodb://localhost:27017/test' ;
+const userOptions = {
+  user : "zh" ,
+  pwd : "123456" ,
+  host : "localhost" ,
+  port : "27017" ,
+  name : "test"
+
+}
+const baseUrl = `mongodb://${userOptions.user}:${userOptions.pwd}@${userOptions.host}:${userOptions.port}/${userOptions.name}` ;
 mongoose.connect(baseUrl,{useNewUrlParser:true ,useUnifiedTopology: true});
 mongoose.connection.on('connected', function(err) {
   if (err) {
