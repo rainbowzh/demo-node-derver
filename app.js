@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-07-29 09:26:48
+ * @LastEditTime: 2020-07-29 10:57:18
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -63,7 +63,7 @@ const userOptions = {
   name : "mylog"
 
 }
-const baseUrl = `mongodb://49.235.235.22/mylog` ;
+const baseUrl = `mongodb://49.235.235.22:27017/mylog` ;
 // const baseUrl = `mongodb://${userOptions.user}:${userOptions.pwd}@${userOptions.host}:${userOptions.port}/${userOptions.name}` ;
 mongoose.connect(baseUrl,{auth:{ user : 'zh' ,password : "I(can?pro~~4<"}, useNewUrlParser:true ,useUnifiedTopology: true});
 mongoose.connection.on('connected', function(err) {
