@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-07-27 16:47:37
+ * @LastEditTime: 2020-07-29 09:26:48
  */
 var createError = require('http-errors');
 var express = require('express');
@@ -57,14 +57,15 @@ mongoose.set('useCreateIndex', true) //加上这个
 // const baseUrl = 'mongodb://localhost:27017/test' ;
 const userOptions = {
   user : "zh" ,
-  pwd : "123456" ,
-  host : "localhost" ,
+  pwd : "I(can?pro~~4<" ,
+  host : "49.235.235.22" ,
   port : "27017" ,
-  name : "test"
+  name : "mylog"
 
 }
-const baseUrl = `mongodb://${userOptions.user}:${userOptions.pwd}@${userOptions.host}:${userOptions.port}/${userOptions.name}` ;
-mongoose.connect(baseUrl,{useNewUrlParser:true ,useUnifiedTopology: true});
+const baseUrl = `mongodb://49.235.235.22/mylog` ;
+// const baseUrl = `mongodb://${userOptions.user}:${userOptions.pwd}@${userOptions.host}:${userOptions.port}/${userOptions.name}` ;
+mongoose.connect(baseUrl,{auth:{ user : 'zh' ,password : "I(can?pro~~4<"}, useNewUrlParser:true ,useUnifiedTopology: true});
 mongoose.connection.on('connected', function(err) {
   if (err) {
     console.error('Failed to connect to database');
