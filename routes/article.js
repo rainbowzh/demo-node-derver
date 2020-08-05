@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-23 10:18:06
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-07-02 19:10:18
+ * @LastEditTime: 2020-08-05 19:47:28
  */ 
 var express = require('express');
 var router = express.Router();
@@ -14,7 +14,7 @@ const tagList  = require('../global/tagType') ;
 
 //获取文章列表
 router.get('/list', async(req, res) => {
-  const list  = await Article.find({});
+  const list  = await Article.find({}).sort({createDate: -1}).exec();
   console.log('list--',list);
   res.json({
     list : list ,
@@ -45,11 +45,20 @@ router.get('/list', async(req, res) => {
 
 //保存文章
 router.post ('/save', async(req, res) => {
-  const { title = "" , context = "" , publishTime = new Date().toLocaleDateString(),  textType = {}} = req.body ;
+  //获取body字段
+  const { 
+    title = new Date().toLocaleDateString() , 
+    context = "" , 
+    publishTime = new Date().toLocaleDateString(), 
+    textType = [], 
+    pageSize = "10", 
+    pageNum = "1" 
+  } = req.body ;
+  
   //过滤title和context
   console.log("textType",textType, req.body) ;
   const id = Math.random().toString(36).slice(2);
-  const article =  new Article({ id : id, title : title, context : context, publishTime : publishTime , textType : textType}) ;
+  const article =  new Article({ id : id, title : title, context : context, publishTime : publishTime , textType : textType , createDate : new Date()}) ;
   await article.save();
   if(article){
     res.json({

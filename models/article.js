@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-15 16:46:08
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-07-02 17:43:28
+ * @LastEditTime: 2020-08-05 19:28:28
  */ 
  
 const mongoose = require('mongoose') ;
@@ -25,17 +25,22 @@ const ArticleSchame = new Schame({
   publishTime : {
     type : String
   },
-  textType : {
-    tagName : {
+  createDate : {
+    type : Date
+  },
+  textType : [
+    {
+      tagName : {
       type : String
-    },
-    tagId : {
-      type : String
-    } ,
-    tagStyle : { 
-      type : String
-    } 
-  }
+      },
+      tagId : {
+        type : String
+      } ,
+      tagStyle : { 
+        type : String
+      } 
+    }
+  ] 
   
 },{
   collection : 'article' ,
