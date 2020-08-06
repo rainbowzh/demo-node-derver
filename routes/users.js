@@ -3,8 +3,8 @@
  * @Version: 2.0
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-07-02 22:17:16
+ * @LastEditors: zhouhong07
+ * @LastEditTime: 2020-08-06 16:50:17
  */
 const { v4: uuidv4 } = require('uuid');
 const express = require('express');
@@ -139,6 +139,17 @@ router.post('/sayWords/save', ( async (req, res) => {
     })
   }
 }));
+
+
+//获取留言板信息
+router.get('sayWords/get' , async() => {
+  let sayContent = await Customer.find({}); 
+  res.json({
+    status : "0" ,
+    message : "成功" ,
+    list : sayContent
+  });
+})
 
 // //保存文章
 // router.post ('/article/save', async(req, res) => {
