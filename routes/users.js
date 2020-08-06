@@ -4,7 +4,7 @@
  * @Author: zhouhong07
  * @Date: 2020-05-08 10:37:09
  * @LastEditors: zhouhong07
- * @LastEditTime: 2020-08-06 16:50:17
+ * @LastEditTime: 2020-08-06 16:59:57
  */
 const { v4: uuidv4 } = require('uuid');
 const express = require('express');
@@ -142,7 +142,7 @@ router.post('/sayWords/save', ( async (req, res) => {
 
 
 //获取留言板信息
-router.get('sayWords/get' , async() => {
+router.get('/sayWords/getlist' , async() => {
   let sayContent = await Customer.find({}); 
   res.json({
     status : "0" ,
